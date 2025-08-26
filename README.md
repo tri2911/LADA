@@ -1,6 +1,6 @@
 # LADA: Scalable Label-Specific CLIP Adapter for Continual Learning
 
-Our paper "LADA: Scalable Label-Specific CLIP Adapter for Continual Learning" has been accepted to **ICML 2025**! 🎉
+This is the source code for our paper "LADA: Scalable Label-Specific CLIP Adapter for Continual Learning" which has been accepted to **ICML 2025**.
 
 ## Requirements
 
@@ -26,7 +26,7 @@ All experiments can be reproduced using a single GPU with 24GB of memory.
 
 ### Prepare the Dataset
 
-You can directly **download the prepared datasets** from our cloud drive: 👉 [pan-seu-LADA](https://pan.seu.edu.cn:443/link/F02AE3290D9C956902E79B11151DAF82),
+You can directly **download the prepared datasets** from: 👉 [https://www.modelscope.cn/datasets/ForestLuo/X-TAIL](https://www.modelscope.cn/datasets/ForestLuo/X-TAIL),
 organized according to [CoOp](https://github.com/KaiyangZhou/CoOp/blob/main/DATASETS.md).
 
 Put files in the following locations and change the path in the data configure files [TAIL.yaml](configs/data/TAIL.yaml) and [TAIL_order2](configs/data/TAIL_order2.yaml).
