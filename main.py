@@ -52,6 +52,15 @@ def main(args):
         torch.backends.cudnn.deterministic = False
         torch.backends.cudnn.benchmark = True
 
+    # Cap GPU memory usage at 16GB (RTX 5070 Ti has 16GB total).
+    if torch.cuda.is_available():
+        gpu_id = cfg.gpu if cfg.gpu is not None else 0
+        total_mib = torch.cuda.get_device_properties(gpu_id).total_memory / (1024 ** 2)
+        cap_mib = 16 * 1024  # 16 GB hard cap
+        frac = min(0.97, cap_mib / total_mib)
+        torch.cuda.set_per_process_memory_fraction(frac, gpu_id)
+        print(f"GPU memory capped to fraction {frac:.3f} (~{frac * total_mib / 1024:.1f} GiB) on cuda:{gpu_id}")
+
     trainer = Trainer(cfg)
     
     if cfg.zero_shot:

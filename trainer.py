@@ -191,7 +191,9 @@ class Trainer:
             end = time.time()
 
             num_batches = len(self.train_loader)
-            for batch_idx, batch in enumerate(self.train_loader):
+            pbar = tqdm(self.train_loader, total=num_batches, ascii=True, leave=False,
+                        desc=f"Train {cfg.dataset} epoch [{epoch_idx + 1}/{num_epochs}]")
+            for batch_idx, batch in enumerate(pbar):
                 data_time.update(time.time() - end)
 
                 image = batch[0]
@@ -248,6 +250,10 @@ class Trainer:
                 acc_meter.update(acc.item())
                 batch_time.update(time.time() - end)
 
+                pbar.set_postfix(loss=f"{loss_meter.avg:.4f}",
+                                 acc=f"{acc_meter.avg:.2f}",
+                                 lr=f"{current_lr:.2e}")
+
                 meet_freq = (batch_idx + 1) % cfg.print_freq == 0
                 only_few_batches = num_batches < cfg.print_freq
                 if meet_freq or only_few_batches:
@@ -268,7 +274,7 @@ class Trainer:
                     info += [f"acc {acc_meter.val:.4f} ({acc_meter.avg:.4f})"]
                     info += [f"lr {current_lr:.4e}"]
                     info += [f"eta {eta}"]
-                    print(" ".join(info))
+                    tqdm.write(" ".join(info))
                 
                 end = time.time()
 
